@@ -1,0 +1,89 @@
+<!DOCTYPE html>
+<html lang="fr">
+  <head>
+    <!-- Required meta tags -->
+    <meta charset="utf-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no">
+
+    <!-- Bootstrap CSS -->
+    <link rel="stylesheet" href="css/bootstrap.min.css" >
+
+    <title>Hello, world!</title>
+  </head>
+  <body>
+    <template id="tpl-todos-liste">
+      <div>
+        <h2>{{infos.nom}}</h2>
+        <hr>
+
+        <article>
+          <div class="input-group mb-3">
+            <input type="text" @keyup.enter="Add()" v-model="addTodo"  class="form-control" placeholder="Saisissez une tache">
+            <div class="input-group-append">
+              <button @click="Add()" class="btn btn-outline-info" type="button" id="button-addon2">Ajouter</button>
+            </div>
+          </div>
+        </article>
+
+        <div v-if="todos.length > 0">
+          <label>
+              Vous avez <span class="badge badge-pill badge-info">{{todos.length}}</span> todos
+          </label>
+
+          <article  v-if="todos.length > 1" class="mt-3">
+            <div class="input-group mb-3">
+              <input type="text" v-model="search"  class="form-control" placeholder="Rechercher dans la liste">
+              <div class="input-group-append">
+                <button class="btn btn-info" type="button" id="button-addon2">Rechercher</button>
+              </div>
+          </div>
+          </article>
+
+          <ul class="list-group list-group-flush mt-4">
+              <li v-for="(todo, i) in todosFiltre" :key="i" class="list-group-item" @dblClick="Update(todo)">
+                {{i + 1}} . {{todo.tache}}
+
+                <button @click="Delete(todo)"  type="button" class="close float-right" aria-label="Close">
+                  <span aria-hidden="true">&times;</span>
+                </button>
+
+              </li>
+          </ul>
+        </div>
+
+        <p v-else class="alert alert-success">
+          <strong>Attention</strong> vous n'avez aucune tache dans votre liste
+        </p>
+
+      </div>  
+    </template>
+
+    <main id="app">
+        <section class="container">
+            <div class="row mt-4">
+                <article class="col-12 mb-4">
+                  <h1>Exemple AJAX</h1>
+                  <hr>
+
+                  <button @click="Add()" class="btn btn-primary">+ Nouvelle Todo</button>  
+                </article>
+
+                <article class="col-4" v-for="(todo, i) in todos" :key="i">
+                   <todos-liste :infos="todo"></todos-liste>
+                </article>
+            </div>
+        </section>
+    </main>
+
+    <!-- Optional JavaScript -->
+    <!-- jQuery first, then Popper.js, then Bootstrap JS -->
+    <script src="https://code.jquery.com/jquery-3.5.1.slim.min.js" integrity="sha384-DfXdz2htPH0lsSSs5nCTpuj/zy4C+OGpamoFVy38MVBnE+IbbVYUew+OrCXaRkfj" crossorigin="anonymous"></script>
+    <script src="https://cdn.jsdelivr.net/npm/popper.js@1.16.0/dist/umd/popper.min.js" integrity="sha384-Q6E9RHvbIyZFJoft+2mJbHaEWldlvI9IOYy5n3zV9zzTtmI3UksdQRVvoxMfooAo" crossorigin="anonymous"></script>
+    <script src="js/bootstrap.min.js"></script>
+    <script src="js/axios.min.js"></script>
+    <script src="js/vue.js"></script>
+    <script src="js/todos.comp.js"></script>
+    <script src="js/app.js"></script>
+    
+  </body>
+</html>
