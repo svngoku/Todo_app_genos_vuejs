@@ -27,7 +27,7 @@ switch($cas){
     case "addLigne":
         $tl = new todos_ligne;
         $tl->id_todos   = $_POST["id_todos"];
-        $tl->tache      = $_POST["tache"];
+        $tl->tache      = $_POST["tache"];  
         $tl->Add();
     break;
 
@@ -36,8 +36,12 @@ switch($cas){
         echo todos_ligne::Delete($id);
     break; 
 
-    case "upDate":
+    case "update":
         $id = $_GET["id"];
-
+        $tl = new todos_ligne;
+        $tl->Set("id", $id);
+        $tl->Load();
+        $tl->Set("tache", $_POST["tache"]);
+        $tl->Update();
     break; 
 }

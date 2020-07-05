@@ -24,7 +24,7 @@ Vue.component("todosListe",{
         this.GetTaches();
     },
     methods:{
-        Add:function(){
+        Add: function(){
             var scope = this;
             var form = new FormData();
             form.append("id_todos", scope.infos.id);
@@ -43,7 +43,6 @@ Vue.component("todosListe",{
             })
         },
         Delete(todo){
-            var scope = this;
             var todo_id = todo.id;
             var rep = confirm("Etes vous sur de vouloir supprimer la todo : " + todo_id);
             if(rep === false) return;
@@ -52,11 +51,18 @@ Vue.component("todosListe",{
                 .then((response) => console.log(response.data))
             this.todos.splice(indice,1);
         },
-        Update(todo){
-            var rep = prompt("Modifiez votre todo : " + todo, todo);
-            if(rep == null) return;
-            var indice = this.todos.indexOf(todo);
-            if(indice != -1) this.$set(this.todos, indice, rep);
+        Update: function(todo){
+            var scope = this;
+            var rep = prompt("Voulez vous modifier ce todo : " + todo.tache);
+            if(rep === false) return;
+            var form = new FormData();
+            form.append("tache", rep);
+            // console.log(form.getAll("tache"))
+            axios.put(`http://localhost:9000/Vuejs/api?cas=update&id=${todo.id}`, {
+                tache: rep
+            }).then(function(data) {
+                scope.GetTaches();
+            })
         },
     }
 });
