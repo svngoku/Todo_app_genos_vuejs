@@ -53,16 +53,25 @@ Vue.component("todosListe",{
         },
         Update: function(todo){
             var scope = this;
-            var rep = prompt("Voulez vous modifier ce todo : " + todo.tache);
-            if(rep === false) return;
+            var todo_id = todo.id;
+            var rep = prompt("Modifiez votre todo : " + todo.tache);
+            if(rep == null) return;
             var form = new FormData();
-            form.append("tache", rep);
-            // console.log(form.getAll("tache"))
-            axios.put(`http://localhost:9000/Vuejs/api?cas=update&id=${todo.id}`, {
-                tache: rep
-            }).then(function(data) {
-                scope.GetTaches();
-            })
+            form.append("id_todos", todo_id);
+            form.append("tache",rep);
+            var indice = this.todos.indexOf(todo);
+            if(indice != -1) this.$set(this.todos, indice, rep);
+            axios.post(`http://localhost:9000/vueJS/api?cas=update&id=${todo_id}`, form)
+                .then(function (response) {
+                 if (response.status === 200) {
+                   console.log("Update Success");
+                   scope.GetTaches();
+                 }
+               })
+               .catch(function (response) {
+                 console.log(response);
+               });
+            
         },
     }
 });

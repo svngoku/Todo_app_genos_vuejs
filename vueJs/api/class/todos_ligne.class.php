@@ -24,4 +24,10 @@ class todos_ligne {
         $query = "DELETE FROM todos_ligne WHERE id = $id";
         $tl->Sql($query);
     }
+
+    // public function update($tache) {
+    //     $tl = new self;
+    //     $query = "UPDATE todos_ligne SET tache = $tache WHERE id = $this->id";
+    //     $tl->Sql($query);
+    // }
 }
